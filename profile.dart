@@ -18,6 +18,24 @@ class Home extends StatefulWidget {
 class HomePage extends State<Home> {
   final Uri _url = Uri.parse(
       'https://docs.google.com/forms/d/e/1FAIpQLSf06B-u22fPhmgPRVm4P8glxNDk3Qpgu-ISJ5v_wLmsqGIFIA/viewform?usp=publish-editor');
+
+    var _images = [
+    'image/it/oit12.jpg',
+    'image/it/oit13.jpg',
+    'image/it/it13.jpg',
+    'image/it/it14.jpg',
+    'image/it/it16.jpg',
+    'image/it/it17.jpg',
+    'image/it/it18.jpg',
+    'image/it/it19.jpg',
+    'image/it/it23.jpg',
+  ];
+
+   final Uri _urlit1 = Uri.parse(
+      'https://www.tiktok.com/@mrider1?_r=1&_t=ZS-92YtGazf0Ik');
+  final Uri _urlit2 = Uri.parse(
+      'https://www.youtube.com/@jadoit/videos');
+
   var _colors = [
     Color(0xffff78a3),
     Color(0xffff9178),
@@ -86,6 +104,16 @@ class HomePage extends State<Home> {
                   padding: EdgeInsets.all(5),
                   children: gridChildren(),
                 )),
+            SizedBox(height: 20,),
+            Text(
+              'ศิษย์เก่า',
+              style: textStyle(),
+            ),
+            SizedBox(height: 20,),
+            Container(
+              child: boxImage()
+            ),
+            SizedBox(height: 20,),
             Text(
               'คณะผู้บริหาร',
               style: textStyle(),
@@ -122,6 +150,65 @@ class HomePage extends State<Home> {
         fontSize: 15,
         color: Colors.black54
       );
+
+   Future<void> _launchInBrowserView1() async {
+    if (!await launchUrl(_urlit1, mode: LaunchMode.inAppBrowserView)) {
+      throw Exception('Could not launch $_urlit1');
+    }
+  }
+
+  Future<void> _launchInBrowserView2() async {
+    if (!await launchUrl(_urlit2, mode: LaunchMode.inAppBrowserView)) {
+      throw Exception('Could not launch $_urlit2');
+    }
+  }
+
+  Widget oclass(var _oclass) => Column(children: [
+     Container(
+        height: 141,
+        decoration: BoxDecoration(
+          color: Colors.black38,
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(image: AssetImage(_oclass),fit: BoxFit.cover)
+        ),
+      ),
+      SizedBox(height: 5,),
+      Container(
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Color(0xffffd578),
+        ),
+        height: 40,
+        child: Row(children: [
+        Text('ช่องทางการติดตาม : ',style: TextStyle(color: Colors.black54,fontSize: 12,fontWeight: FontWeight.w700),),
+        if ((_oclass == _images[4]) || (_oclass == _images[5]) || (_oclass == _images[6]))
+        IconButton(onPressed: _launchInBrowserView1, icon:Icon(Icons.tiktok,color: Colors.black54,)),
+        if(_oclass == _images[7])
+        IconButton(onPressed: _launchInBrowserView2, icon: Icon(Icons.video_settings,color: Colors.black54,)),
+        if ((_oclass != _images[4]) || (_oclass != _images[5] || (_oclass != _images[6])))
+        TextButton(onPressed: null, child: Text('')),
+      ],),
+      )
+  ],);
+
+  Widget boxImage() => Container(
+    height: 190,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+    ),
+   
+    child: PageView(children: [
+      oclass(_images[0]),
+      oclass(_images[1]),
+      oclass(_images[3]),
+      oclass(_images[4]),
+      oclass(_images[5]),
+      oclass(_images[6]),
+      oclass(_images[7]),
+      oclass(_images[8]),
+    ],),
+  );
 
   List<Widget> gridChildren() =>
       List.generate(caption.length, (i) => _captions(caption[i], _colors[i]));

@@ -135,13 +135,16 @@ class PageState extends State<Class7> {
     ),
   );
 
-  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => Container(
+  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => InkWell(
+    onTap: () => gotopage(_textSkils[i]),
+    child: Container(
     padding: EdgeInsets.all(5),
     child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,children: [Icon(_iconSkills[i],color: Colors.white70,),Text(_textSkils[i],style: TextStyle(fontSize: 10,color: Colors.white70),)],),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       color: Color.fromARGB(255, 222, 161, 251)
     ),
+  ),
   ));
 
   TextStyle _fontText() => TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
@@ -153,5 +156,47 @@ class PageState extends State<Class7> {
     if (!await launchUrl(_urlit, mode: LaunchMode.inAppBrowserView)) {
       throw Exception('Could not launch $_urlit');
     }
+  }
+
+  void gotopage(var _caption){
+    String _title;
+    String _content;
+    if(_caption == 'ความรอบคอบและละเอียด'){
+      _title = 'ความรอบคอบและละเอียด';
+      _content = 'นักศึกษาจะได้เรียนรู้ทักษะการทำงานที่ต้องใช้ความรอบคอบและความละเอียดในการตรวจสอบชิ้นส่วนเครื่องจักร เพื่อป้องกันความผิดพลาดในการซ่อมบำรุง';
+    }else if(_caption == 'การคิดวิเคราะห์และแก้ปัญหา'){
+      _title = 'การคิดวิเคราะห์และแก้ปัญหา';
+      _content = "นักศึกษาจะได้เรียนรู้ทักษะการวิเคราะห์ปัญหาที่เกิดขึ้นกับเครื่องจักร และการหาวิธีแก้ไขปัญหาอย่างมีประสิทธิภาพ";
+    }else if(_caption == 'ความมีวินัยและความอดทน'){
+      _title = 'ความมีวินัยและความอดทน';
+      _content = 'นักศึกษาจะได้เรียนรู้การมีวินัยในการทำงาน และการอดทนต่อสภาพแวดล้อมการทำงานที่อาจมีความยากลำบาก เช่น เสียงดัง ฝุ่นละออง หรือสภาพอากาศที่ไม่เอื้ออำนวย';
+    }else if(_caption == 'การทำงานเป็นทีม'){
+      _title = 'การทำงานเป็นทีม';
+      _content = 'นักศึกษาจะได้เรียนรู้การทำงานร่วมกับผู้อื่นในการซ่อมบำรุงเครื่องจักร การแบ่งหน้าที่ และการประสานงานอย่างมีประสิทธิภาพ';
+    }else if(_caption == 'ความปลอดภัยในการทำงาน'){
+      _title = 'ความปลอดภัยในการทำงาน';
+      _content = 'นักศึกษาจะได้เรียนรู้มาตรฐานและแนวปฏิบัติด้านความปลอดภัยในการทำงานกับเครื่องจักร เพื่อป้องกันอุบัติเหตุและสร้างสภาพแวดล้อมการทำงานที่ปลอดภัย';
+    }else if(_caption == 'การเรียนรู้เทคโนโลยีใหม่'){
+      _title = 'การเรียนรู้เทคโนโลยีใหม่';
+      _content = 'นักศึกษาจะได้เรียนรู้การติดตามและปรับตัวกับเทคโนโลยีใหม่ๆ ที่เกี่ยวข้องกับเครื่องจักรกล เพื่อให้สามารถนำความรู้ไปประยุกต์ใช้ในการทำงานได้อย่างมีประสิทธิภาพ';
+    }
+    else{
+      return;
+    }
+    materialAlert(
+      context,
+      title: _title,
+      content: _content
+    );
+  }
+
+  void materialAlert(BuildContext context,{String title = '',String content = ''}){
+    showDialog(context: context, builder: (context) => AlertDialog(
+      title: Text(title,style: TextStyle(fontWeight: FontWeight.w400,color: Colors.black54),),
+      content: Text(content,style: TextStyle(color: Colors.black54),),
+      actions: [
+        TextButton(onPressed: Navigator.of(context).pop, child: Text('OK'))
+      ],
+    ));
   }
 }

@@ -16,14 +16,14 @@ class PageState extends State<Class6> {
   var _iconSkills = [Icons.route,Icons.psychology,Icons.support_agent,Icons.schedule,Icons.inventory,Icons.groups,];
   var _classimage = ['image/logic/lo1.jpg','image/logic/lo2.jpg','image/logic/lo3.jpg',];
   var _nameClass = [
-    'นางวาสนา เวฬุวนารักษ์',
+    'นางสาวอุษณีย์ บุญคุ้ม',
   ];
   var _levelname = [
     'หัวหน้าแผนกวิชา',
   ];
 
   var _image = [
-    'image/logic/wasana.jpg',
+    'image/logic/asunee.jpg',
   ];
 
   final Uri _urlit = Uri.parse(
@@ -122,14 +122,17 @@ class PageState extends State<Class6> {
     ),
   );
 
-   List<Widget> textSkills() => List.generate(_textSkils.length, (i) => Container(
+   List<Widget> textSkills() => List.generate(_textSkils.length, (i) => InkWell(
+    onTap: () => gotopage(_textSkils[i]),
+    child: Container(
     padding: EdgeInsets.all(5),
     child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,children: [Icon(_iconSkills[i],color: Colors.white70,),Text(_textSkils[i],style: TextStyle(fontSize: 10,color: Colors.white70),)],),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       color: Color(0xffa1bdfb)
     ),
-  ));
+  ),
+   ));
 
 
   TextStyle _fontText() => TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
@@ -140,5 +143,47 @@ class PageState extends State<Class6> {
     if (!await launchUrl(_urlit, mode: LaunchMode.inAppBrowserView)) {
       throw Exception('Could not launch $_urlit');
     }
+  }
+
+  void gotopage(var _caption){
+    String _title;
+    String _content;
+    if(_caption == 'การวางแผนและจัดระบบ'){
+      _title = 'การวางแผนและจัดระบบ';
+      _content = 'นักศึกษาจะได้เรียนรู้การวางแผนการขนส่งสินค้า การจัดการคลังสินค้า และการบริหารซัพพลายเชนเพื่อให้การดำเนินงานเป็นไปอย่างมีประสิทธิภาพ';
+    }else if(_caption == 'การแก้ปัญหาเฉพาะหน้า'){
+      _title = 'การแก้ปัญหาเฉพาะหน้า';
+      _content = "นักศึกษาจะได้ฝึกทักษะการแก้ไขปัญหาเฉพาะหน้าในการจัดการโลจิสติกส์ เช่น การจัดการกับความล่าช้าในการขนส่ง หรือปัญหาด้านคลังสินค้า";
+    }else if(_caption == 'การสื่อสารและประสานงาน'){
+      _title = 'การสื่อสารและประสานงาน';
+      _content = 'นักศึกษาจะได้เรียนรู้ทักษะการสื่อสารและประสานงานกับทีมงาน ผู้จัดส่ง และลูกค้า เพื่อให้การดำเนินงานเป็นไปอย่างราบรื่น';
+    }else if(_caption == 'การบริหารเวลา'){
+      _title = 'การบริหารเวลา';
+      _content = 'นักศึกษาจะได้เรียนรู้การจัดการเวลาอย่างมีประสิทธิภาพเพื่อให้สามารถทำงานได้ตามกำหนดและมีประสิทธิภาพ';
+    }else if(_caption == 'ความรับผิดชอบ'){
+      _title = 'ความรับผิดชอบ';
+      _content = 'นักศึกษาจะได้เรียนรู้การรับผิดชอบต่อหน้าที่การงานในการจัดการโลจิสติกส์ และการดูแลรักษาอุปกรณ์และสถานที่ทำงานให้มีประสิทธิภาพ';
+    }else if(_caption == 'การทำงานเป็นทีม'){
+      _title = 'การทำงานเป็นทีม';
+      _content = 'นักศึกษาจะได้เรียนรู้การทำงานร่วมกับผู้อื่นในการจัดการโลจิสติกส์ และการบริการลูกค้าอย่างมีประสิทธิภาพ';
+    }
+    else{
+      return;
+    }
+    materialAlert(
+      context,
+      title: _title,
+      content: _content
+    );
+  }
+
+  void materialAlert(BuildContext context,{String title = '',String content = ''}){
+    showDialog(context: context, builder: (context) => AlertDialog(
+      title: Text(title,style: TextStyle(fontWeight: FontWeight.w400,color: Colors.black54),),
+      content: Text(content,style: TextStyle(color: Colors.black54),),
+      actions: [
+        TextButton(onPressed: Navigator.of(context).pop, child: Text('OK'))
+      ],
+    ));
   }
 }

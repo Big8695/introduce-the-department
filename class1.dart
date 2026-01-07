@@ -123,13 +123,16 @@ class PageState extends State<Class1> {
     ),
   );
 
-  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => Container(
+  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => InkWell(
+    onTap: () => gotopage(_textSkils[i]),
+    child: Container(
     padding: EdgeInsets.all(5),
     child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,children: [Icon(_iconSkills[i],color: Colors.white70,),Text(_textSkils[i],style: TextStyle(fontSize: 10,color: Colors.white70),)],),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       color: Color(0xffff78a3)
     ),
+  ),
   ));
 
 
@@ -142,5 +145,47 @@ class PageState extends State<Class1> {
     if (!await launchUrl(_urlit, mode: LaunchMode.inAppBrowserView)) {
       throw Exception('Could not launch $_urlit');
     }
+  }
+
+  void gotopage(var _caption){
+    String _title;
+    String _content;
+    if(_caption == 'ความรับผิดชอบ'){
+      _title = 'ความรับผิดชอบ';
+      _content = 'ความรับผิดชอบเป็นคุณสมบัติที่สำคัญสำหรับนักบัญชี นักศึกษาจะได้เรียนรู้การรับผิดชอบต่อหน้าที่การงาน และการทำงานอย่างมีคุณภาพเพื่อสร้างความน่าเชื่อถือในสายอาชีพ';
+    }else if(_caption == 'วินัยและความตรงต่อเวลา'){
+      _title = 'วินัยและความตรงต่อเวลา';
+      _content = "วินัยความตรงต่อเวลาเป็นสิ่งสำคัญในการทำงานด้านไฟฟ้า นักศึกษาจะได้เรียนรู้การปฏิบัติตามกฎระเบียบด้านความปลอดภัย และการจัดการเวลาในการทำงานอย่างมีประสิทธิภาพ";
+    }else if(_caption == 'การทำงานเป็นทีม'){
+      _title = 'การทำงานเป็นทีม';
+      _content = 'ฝึกทำงานกลุ่มผ่านกิจกรรมและโครงงานด้านไฟฟ้า เรียนรู้การแบ่งหน้าที่ ความรับผิดชอบ และการทำงานร่วมกันอย่างมืออาชีพ';
+    }else if(_caption == 'การสื่อสารที่ชัดเจน'){
+      _title = 'การสื่อสารที่ชัดเจน';
+      _content = 'นักศึกษาจะได้ฝึกทักษะการสื่อสารที่มีประสิทธิภาพ ทั้งการเขียนรายงานทางเทคนิคและการนำเสนอข้อมูลต่อผู้บริหารหรือบุคคลภายนอกองค์กร';
+    }else if(_caption == 'การคิดวิเคราะห์และแก้ปัญหา'){
+      _title = 'การคิดวิเคราะห์และแก้ปัญหา';
+      _content = 'การเรียนไฟฟ้ากำลังช่วยฝึกให้คิดอย่างเป็นระบบ วิเคราะห์ข้อมูลและปัญหาได้อย่างแม่นยำ สามารถนำความรู้ไปประยุกต์ใช้ได้จริงทั้งในการเรียนและการทำงานในอนาคต';
+    }else if(_caption == 'ความปลอดภัยในการทำงาน'){
+      _title = 'ความปลอดภัยในการทำงาน';
+      _content = 'นักศึกษาจะได้เรียนรู้มาตรฐานและแนวปฏิบัติด้านความปลอดภัยในการทำงานกับระบบไฟฟ้า เพื่อป้องกันอุบัติเหตุและสร้างสภาพแวดล้อมการทำงานที่ปลอดภัย';
+    }
+    else{
+      return;
+    }
+    materialAlert(
+      context,
+      title: _title,
+      content: _content
+    );
+  }
+
+  void materialAlert(BuildContext context,{String title = '',String content = ''}){
+    showDialog(context: context, builder: (context) => AlertDialog(
+      title: Text(title,style: TextStyle(fontWeight: FontWeight.w400,color: Colors.black54),),
+      content: Text(content,style: TextStyle(color: Colors.black54),),
+      actions: [
+        TextButton(onPressed: Navigator.of(context).pop, child: Text('OK'))
+      ],
+    ));
   }
 }

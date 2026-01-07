@@ -33,7 +33,7 @@ class PageState extends State<Class2> {
     'image/acc/Bopis.png',
     'image/acc/Vasana.jpg',
     'image/acc/Jirapha.jpg',
-    'image/acc/Sirilak.png',
+    'image/acc/reuse.jpg',
   ];
 
   final Uri _urlit = Uri.parse(
@@ -132,13 +132,16 @@ class PageState extends State<Class2> {
     ),
   );
 
-  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => Container(
+  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => InkWell(
+    onTap: () => gotopage(_textSkils[i]),
+    child: Container(
     padding: EdgeInsets.all(5),
     child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,children: [Icon(_iconSkills[i],color: Colors.white70,),Text(_textSkils[i],style: TextStyle(fontSize: 10,color: Colors.white70),)],),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       color: Color(0xffff9178)
     ),
+  ),
   ));
 
 
@@ -152,5 +155,47 @@ class PageState extends State<Class2> {
     if (!await launchUrl(_urlit, mode: LaunchMode.inAppBrowserView)) {
       throw Exception('Could not launch $_urlit');
     }
+  }
+
+  void gotopage(var _caption){
+    String _title;
+    String _content;
+    if(_caption == 'ความละเอียดรอบคอบ'){
+      _title = 'ความละเอียดรอบคอบ';
+      _content = 'การเรียนบัญชีต้องการความแม่นยำและความรอบคอบสูง นักศึกษาจะได้ฝึกทักษะเหล่านี้ผ่านการบันทึกบัญชีและการจัดทำงบการเงินอย่างถูกต้อง'; ;
+    }else if(_caption == 'ความซื่อสัตย์และจรรยาบรรณ'){
+      _title = 'ความซื่อสัตย์และจรรยาบรรณ';
+      _content = "นักศึกษาจะได้เรียนรู้ความสำคัญของจรรยาบรรณทางวิชาชีพในการทำงานบัญชี เช่น การรักษาความลับของข้อมูลทางการเงิน และการปฏิบัติตามกฎหมายที่เกี่ยวข้อง";
+    }else if(_caption == 'การคิดวิเคราะห์ตัวเลข'){
+      _title = 'การคิดวิเคราะห์ตัวเลข';
+      _content = 'คิดวิเคราะห์ตัวเลขเป็นทักษะสำคัญในการทำบัญชี นักศึกษาจะได้ฝึกวิเคราะห์ข้อมูลทางการเงิน เพื่อตัดสินใจและแก้ไขปัญหาทางธุรกิจ';
+    }else if(_caption == 'การบริหารเวลา'){
+      _title = 'การบริหารเวลา';
+      _content = 'บริหารเวลาเป็นทักษะที่จำเป็นสำหรับนักบัญชี เนื่องจากต้องจัดการงานหลายอย่างพร้อมกัน นักศึกษาจะได้เรียนรู้วิธีการวางแผนและจัดลำดับความสำคัญของงานต่างๆ อย่างมีประสิทธิภาพ';
+    }else if(_caption == 'ความรับผิดชอบ'){
+      _title = 'ความรับผิดชอบ';
+      _content = 'ความรับผิดชอบเป็นคุณสมบัติที่สำคัญสำหรับนักบัญชี นักศึกษาจะได้เรียนรู้การรับผิดชอบต่อหน้าที่การงาน และการทำงานอย่างมีคุณภาพเพื่อสร้างความน่าเชื่อถือในสายอาชีพ';
+    }else if(_caption == 'การสื่อสารทางธุรกิจ'){
+      _title = 'การสื่อสารทางธุรกิจ';
+      _content = 'นักศึกษาจะได้ฝึกทักษะการสื่อสารที่มีประสิทธิภาพ ทั้งการเขียนรายงานทางการเงินและการนำเสนอข้อมูลต่อผู้บริหารหรือบุคคลภายนอกองค์กร';
+    }
+    else{
+      return;
+    }
+    materialAlert(
+      context,
+      title: _title,
+      content: _content
+    );
+  }
+
+  void materialAlert(BuildContext context,{String title = '',String content = ''}){
+    showDialog(context: context, builder: (context) => AlertDialog(
+      title: Text(title,style: TextStyle(fontWeight: FontWeight.w400,color: Colors.black54),),
+      content: Text(content,style: TextStyle(color: Colors.black54),),
+      actions: [
+        TextButton(onPressed: Navigator.of(context).pop, child: Text('OK'))
+      ],
+    ));
   }
 }

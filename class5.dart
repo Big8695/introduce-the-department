@@ -123,13 +123,16 @@ class PageState extends State<Class5> {
     ),
   );
 
-  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => Container(
+  List<Widget> textSkills() => List.generate(_textSkils.length, (i) => InkWell(
+    onTap: () => gotopage(_textSkils[i]),
+    child: Container(
     padding: EdgeInsets.all(5),
     child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,children: [Icon(_iconSkills[i],color: Colors.black54,),Text(_textSkils[i],style: TextStyle(fontSize: 10,color: Colors.black54),)],),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       color: Color(0xff78ffd5),
-  )));
+  )),
+  ));
 
 
   TextStyle _fontText() => TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
@@ -141,5 +144,47 @@ class PageState extends State<Class5> {
     if (!await launchUrl(_urlit, mode: LaunchMode.inAppBrowserView)) {
       throw Exception('Could not launch $_urlit');
     }
+  }
+
+  void gotopage(var _caption){
+    String _title;
+    String _content;
+    if(_caption == 'ความสะอาดและสุขอนามัย'){
+      _title = 'ความสะอาดและสุขอนามัย';
+      _content = 'นักศึกษาจะได้เรียนรู้การรักษาความสะอาดและสุขอนามัยในการประกอบอาหาร เพื่อป้องกันการปนเปื้อนและการเจ็บป่วยจากอาหาร';
+    }else if(_caption == 'ความคิดสร้างสรรค์'){
+      _title = 'ความคิดสร้างสรรค์';
+      _content = "นักศึกษาจะได้ฝึกการคิดสร้างสรรค์ในการออกแบบเมนูอาหาร และการนำเสนออาหารในรูปแบบที่น่าสนใจและดึงดูดใจลูกค้า";
+    }else if(_caption == 'การทำงานเป็นทีม'){
+      _title = 'การทำงานเป็นทีม';
+      _content = 'นักศึกษาจะได้เรียนรู้การทำงานร่วมกับผู้อื่นในการประกอบอาหาร การจัดเตรียม และการบริการอาหารอย่างมีประสิทธิภาพ';
+    }else if(_caption == 'การจัดการเวลา'){
+      _title = 'การจัดการเวลา';
+      _content = 'นักศึกษาจะได้ฝึกการจัดการเวลาในการประกอบอาหาร เพื่อให้สามารถทำงานได้อย่างรวดเร็วและมีประสิทธิภาพ';
+    }else if(_caption == 'ความรับผิดชอบ'){
+      _title = 'ความรับผิดชอบ';
+      _content = 'นักศึกษาจะได้เรียนรู้การรับผิดชอบต่อหน้าที่การงานในการประกอบอาหาร และการดูแลรักษาอุปกรณ์และสถานที่ทำงานให้สะอาดและปลอดภัย';
+    }else if(_caption == 'การควบคุมอารมณ์และความกดดัน'){
+      _title = 'การควบคุมอารมณ์และความกดดัน';
+      _content = 'นักศึกษาจะได้ฝึกการควบคุมอารมณ์และการจัดการกับความกดดันในการทำงานในครัวที่มีความเร่งรีบและต้องรับมือกับสถานการณ์ต่างๆ อย่างมีสติ';
+    }
+    else{
+      return;
+    }
+    materialAlert(
+      context,
+      title: _title,
+      content: _content
+    );
+  }
+
+  void materialAlert(BuildContext context,{String title = '',String content = ''}){
+    showDialog(context: context, builder: (context) => AlertDialog(
+      title: Text(title,style: TextStyle(fontWeight: FontWeight.w400,color: Colors.black54),),
+      content: Text(content,style: TextStyle(color: Colors.black54),),
+      actions: [
+        TextButton(onPressed: Navigator.of(context).pop, child: Text('OK'))
+      ],
+    ));
   }
 }
